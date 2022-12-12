@@ -1,0 +1,17 @@
+body {
+
+}
+
+.contentEmployee {
+    border: black solid 4px;
+    margin: 2%;
+    padding: 2%;
+}
+
+#employees {
+
+}
+
+.deptManager {
+    color: red;
+}

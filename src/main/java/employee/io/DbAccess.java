@@ -2,8 +2,7 @@ package employee.io;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import employee.beans.Department;
-import employee.beans.Employee;
+import employee.pojos.Department;
 
 import java.io.File;
 import java.io.IOException;

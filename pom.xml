@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>at.kaindorf</groupId>
-    <artifactId>Exa_102_Springboot_JPA_EmployeeDB</artifactId>
+    <artifactId>employeedb</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Exa_102_Springboot_JPA_EmployeeDB</name>
     <description>Exa_102_Springboot_JPA_EmployeeDB</description>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <script th:src="@{/employee.js}"></script>
+
+</head>
+<body>
+<div class="contentEmployee">
+    <h1>Employee Administration</h1>
+    <label for="departments">Departments: </label>
+    <select name="departments" id="departments" onchange="showEmployeeFromDepartment(this.value)">
+        <option disabled selected value> -- select a department --</option>
+        <option th:href="@{/department/show/{id}(id=${department.getDeptNo()})}" th:each="department: ${departments}"
+                th:value="${department.getDeptNo()}"
+                th:text="${department.getDeptName()}"></option>
+    </select>
+    <br>
+    <br>
+    <form method="get" th:action="@{/employee}">
+        <label for="btnAdd">New employee: </label>
+        <input type="submit" value="add" id="btnAdd">
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Birthdate</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Employee-No</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="department: ${departments}">
+            <tr style="display: none" th:class="${'deptManager ' + department.getDeptNo()}">
+                <td th:text="${department.getDeptManager().getLastname()}"></td>
+                <td th:text="${department.getDeptManager().getDateOfBirth()}"></td>
+                <td th:text="${department.getDeptManager().getGender()}"></td>
+                <td th:text="${department.getDeptManager().getEmployeeNo()}"></td>
+                <td></td>
+            </tr>
+            <tr style="display: none" th:class="${department.getDeptNo()}"
+                th:each="student: ${department.getEmployees()}">
+                <td th:text="${student.getLastname()}"></td>
+                <td th:text="${student.getDateOfBirth()}"></td>
+                <td th:text="${student.getGender()}"></td>
+                <td th:text="${student.getEmployeeNo()}"></td>
+                <td>
+                    <button th:value="${student.getEmployeeNo()}">DELETE</button>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

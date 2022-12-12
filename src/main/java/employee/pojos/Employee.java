@@ -1,10 +1,9 @@
-package employee.beans;
+package employee.pojos;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import employee.serializer.LocalDateDeserializer;
+import employee.util.LocalDateDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,14 +26,14 @@ import java.time.LocalDate;
 public class Employee {
     @Id
     @JsonAlias("emp_no")
-    private int employeeNo;
+    private Integer employeeNo;
     private String firstname;
     private String lastname;
     private Gender gender;
     @JsonAlias("birthDate")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private Department department;

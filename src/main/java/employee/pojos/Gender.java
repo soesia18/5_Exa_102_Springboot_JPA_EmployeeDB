@@ -1,8 +1,4 @@
-package employee.beans;
-
-import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
+package employee.pojos;
 
 /**
  * <h3>Created by IntelliJ IDEA.</h3><br>

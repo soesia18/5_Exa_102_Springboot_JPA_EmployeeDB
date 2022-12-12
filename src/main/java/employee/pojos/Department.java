@@ -1,4 +1,4 @@
-package employee.beans;
+package employee.pojos;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.persistence.*;
@@ -28,7 +28,7 @@ public class Department {
     @JsonAlias("name")
     private String deptName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Employee deptManager;
 
     public void setDeptManager(Employee deptManager) {
@@ -36,7 +36,7 @@ public class Department {
         this.deptManager = deptManager;
     }
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Employee> employees = new ArrayList<>();
 
     public void setEmployees(List<Employee> employees) {

@@ -17,13 +17,24 @@
 <body>
 <div class="contentEmployee">
     <h1>Employee Administration</h1>
-    <label for="departments">Departments: </label>
+
+    <form method="post" th:action="@{/department}" th:object="${actualDepartment}">
+        <label for="departments">Departments: </label>
+        <select name="departments" id="departments" onchange="submit()" th:field="${actualDepartment.deptNo}">
+            <option th:each="department: ${departments}"
+                    th:value="${department.deptNo}"
+                    th:text="${department.deptName}">
+            </option>
+        </select>
+    </form>
+
+    <!--<label for="departments">Departments: </label>
     <select name="departments" id="departments" onchange="showEmployeeFromDepartment(this.value)">
-        <option disabled selected value> -- select a department --</option>
+        <option disabled selected value> &#45;&#45; select a department &#45;&#45;</option>
         <option th:href="@{/department/show/{id}(id=${department.getDeptNo()})}" th:each="department: ${departments}"
                 th:value="${department.getDeptNo()}"
                 th:text="${department.getDeptName()}"></option>
-    </select>
+    </select>-->
     <br>
     <br>
     <form method="get" th:action="@{/employee}">
@@ -41,26 +52,23 @@
             <th></th>
         </tr>
         </thead>
-        <tbody>
-        <div th:each="department: ${departments}">
-            <tr style="display: none" th:class="${'deptManager ' + department.getDeptNo()}">
-                <td th:text="${department.getDeptManager().getLastname()}"></td>
-                <td th:text="${department.getDeptManager().getDateOfBirth()}"></td>
-                <td th:text="${department.getDeptManager().getGender()}"></td>
-                <td th:text="${department.getDeptManager().getEmployeeNo()}"></td>
+        <tbody th:if="${actualDepartment.getDeptNo() != null}">
+            <tr style="color: red">
+                <td th:text="${actualDepartment.deptManager.lastname}"></td>
+                <td th:text="${actualDepartment.deptManager.dateOfBirth}"></td>
+                <td th:text="${actualDepartment.deptManager.gender}"></td>
+                <td th:text="${actualDepartment.deptManager.employeeNo}"></td>
                 <td></td>
             </tr>
-            <tr style="display: none" th:class="${department.getDeptNo()}"
-                th:each="student: ${department.getEmployees()}">
-                <td th:text="${student.getLastname()}"></td>
-                <td th:text="${student.getDateOfBirth()}"></td>
-                <td th:text="${student.getGender()}"></td>
-                <td th:text="${student.getEmployeeNo()}"></td>
+            <tr th:each="student: ${actualDepartment.employees}">
+                <td th:text="${student.lastname}"></td>
+                <td th:text="${student.dateOfBirth}"></td>
+                <td th:text="${student.gender}"></td>
+                <td th:text="${student.employeeNo}"></td>
                 <td>
-                    <button th:value="${student.getEmployeeNo()}">DELETE</button>
+                    <button th:value="${student.employeeNo}">DELETE</button>
                 </td>
             </tr>
-        </div>
         </tbody>
     </table>
 </div>

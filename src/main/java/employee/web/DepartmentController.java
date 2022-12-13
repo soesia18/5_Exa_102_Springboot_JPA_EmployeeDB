@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +26,29 @@ import java.util.List;
 @Controller
 @Slf4j
 @DependsOn("initDatabase")
-@RequestMapping("/")
+@RequestMapping("/department")
+@SessionAttributes({"departments"})
 public class DepartmentController {
 
     private DepartmentRepository departmentRepository;
     private EmployeeRepository employeeRepository;
 
-    private List<Department> departments = new ArrayList<>();
+    private List<Department> departments;
 
     public DepartmentController(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         this.departmentRepository = departmentRepository;
         this.employeeRepository = employeeRepository;
+    }
+
+    @ModelAttribute("actualDepartment")
+    public Department department (Model model) {
+        return new Department();
+    }
+
+
+    @ModelAttribute("departments")
+    public List<Department> departments () {
+        return departments;
     }
 
     @PostConstruct
@@ -45,11 +57,18 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public String showAllDepartments (Model model) {
+    public ModelAndView showAllDepartments (Model model) {
         log.debug("GET request to /");
 
-        model.addAttribute("departments", departments);
+        return new ModelAndView("departmentView");
+    }
 
-        return "departmentView";
+    @PostMapping
+    public ModelAndView loadEmployee (Model model,
+                                      @ModelAttribute("actualDepartment") Department actualDepartment) {
+        log.debug("POST request to /");
+        actualDepartment = departmentRepository.findById(actualDepartment.getDeptNo()).get();
+        model.addAttribute("actualDepartment", actualDepartment);
+        return new ModelAndView("departmentView");
     }
 }

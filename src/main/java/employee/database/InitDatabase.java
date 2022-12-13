@@ -31,6 +31,5 @@ public class InitDatabase {
     public void insertData () {
         List<Department> departmentList = DbAccess.readJson();
         departmentRepository.saveAll(departmentList);
-
     }
 }

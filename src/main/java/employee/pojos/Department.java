@@ -24,8 +24,10 @@ import java.util.List;
 public class Department {
     @Id
     @JsonAlias("number")
+    @Column(length = 5)
     private String deptNo;
     @JsonAlias("name")
+    @Column(length = 40)
     private String deptName;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

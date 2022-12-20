@@ -27,8 +27,11 @@ public class Employee {
     @Id
     @JsonAlias("emp_no")
     private Integer employeeNo;
+    @Column(length = 14)
     private String firstname;
+    @Column(length = 16)
     private String lastname;
+    @Column(length = 5)
     private Gender gender;
     @JsonAlias("birthDate")
     @JsonDeserialize(using = LocalDateDeserializer.class)

@@ -19,11 +19,11 @@
     <h1>Employee Administration</h1>
 
     <form method="post" th:action="@{/department}" th:object="${actualDepartment}">
-        <label for="departments">Departments: </label>
-        <select name="departments" id="departments" onchange="submit()" th:field="${actualDepartment.deptNo}">
+        <label for="deptNo">Departments: </label>
+        <select name="deptNo" id="deptNo" onchange="submit()" th:field="${actualDepartment.deptNo}">
             <option th:each="department: ${departments}"
-                    th:value="${department.deptNo}"
-                    th:text="${department.deptName}">
+                    th:value="${department.getDeptNo()}"
+                    th:text="${department.getDeptName()}">
             </option>
         </select>
     </form>
@@ -52,23 +52,26 @@
             <th></th>
         </tr>
         </thead>
-        <tbody th:if="${actualDepartment.getDeptNo() != null}">
-            <tr style="color: red">
-                <td th:text="${actualDepartment.deptManager.lastname}"></td>
-                <td th:text="${actualDepartment.deptManager.dateOfBirth}"></td>
-                <td th:text="${actualDepartment.deptManager.gender}"></td>
-                <td th:text="${actualDepartment.deptManager.employeeNo}"></td>
-                <td></td>
-            </tr>
-            <tr th:each="student: ${actualDepartment.employees}">
-                <td th:text="${student.lastname}"></td>
-                <td th:text="${student.dateOfBirth}"></td>
-                <td th:text="${student.gender}"></td>
-                <td th:text="${student.employeeNo}"></td>
-                <td>
-                    <button th:value="${student.employeeNo}">DELETE</button>
-                </td>
-            </tr>
+        <tbody th:if="${actualDepartment.deptNo != null}">
+        <tr style="color: red">
+            <td th:text="${actualDepartment.deptManager.lastname}"></td>
+            <td th:text="${actualDepartment.deptManager.dateOfBirth}"></td>
+            <td th:text="${actualDepartment.deptManager.gender}"></td>
+            <td th:text="${actualDepartment.deptManager.employeeNo}"></td>
+            <td></td>
+        </tr>
+        <tr th:each="student: ${actualDepartment.employees}">
+            <td th:text="${student.lastname}"></td>
+            <td th:text="${student.dateOfBirth}"></td>
+            <td th:text="${student.gender}"></td>
+            <td th:text="${student.employeeNo}"></td>
+            <td>
+                <!--<form th:method="DELETE" th:action="@{/employee/{id}(id = ${student.employeeNo})}">
+                    <button class="btn btn-danger" th:value="${student.employeeNo}">DELETE</button>
+                </form>-->
+                <a th:method="GET" th:href="@{/employee/{id}(id = ${student.employeeNo})}" class="btn btn-danger">DELETE</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

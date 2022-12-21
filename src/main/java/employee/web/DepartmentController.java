@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 @SessionAttributes({"departments", "actualDepartment"})
 public class DepartmentController {
 
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
     private EmployeeRepository employeeRepository;
 
 
@@ -70,7 +70,7 @@ public class DepartmentController {
         model.addAttribute("departments", departments);
 
         if (!departments.isEmpty() && model.getAttribute("actualDepartment") == null) {
-            model.addAttribute("actualDepartment", getDepartment(departments.get(0).getDeptNo()));
+            model.addAttribute("actualDepartment", new Department(getDepartment(departments.get(0).getDeptNo())));
         } else {
             model.addAttribute("actualDepartment", getDepartment(((Department) Objects.requireNonNull(model.getAttribute("actualDepartment"))).getDeptNo()));
         }

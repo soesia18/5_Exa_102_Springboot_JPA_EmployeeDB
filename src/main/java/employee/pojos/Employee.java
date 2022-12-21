@@ -3,6 +3,7 @@ package employee.pojos;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import employee.util.LocalDateDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,19 +27,29 @@ import java.time.LocalDate;
 public class Employee {
     @Id
     @JsonAlias("emp_no")
+    /*@NotBlank(message = "employee-number is required")*/
     private Integer employeeNo;
     @Column(length = 14)
+    /*@NotBlank(message = "firstname is required")*/
     private String firstname;
     @Column(length = 16)
+    /*@NotBlank(message = "lastname is required")*/
     private String lastname;
     @Column(length = 5)
+    /*@Size(max = 1, message = "only M or F allowed")
+    @NotBlank(message = "gender is required")*/
     private Gender gender;
     @JsonAlias("birthDate")
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    /*@NotBlank(message = "birthdate is required")*/
     private LocalDate dateOfBirth;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private Department department;
+
+    public String getLastAndFirstName () {
+        return lastname + ", " + firstname;
+    }
 
 }

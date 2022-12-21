@@ -45,4 +45,11 @@ public class Department {
         employees.forEach(employee -> employee.setDepartment(this));
         this.employees = employees;
     }
+
+    public Department(Department department) {
+        this.deptNo = department.deptNo;
+        this.deptName = department.deptName;
+        this.deptManager = department.deptManager;
+        this.employees = department.employees;
+    }
 }

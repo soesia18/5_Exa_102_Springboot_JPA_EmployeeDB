@@ -54,14 +54,14 @@
         </thead>
         <tbody th:if="${actualDepartment.deptNo != null}">
         <tr style="color: red">
-            <td th:text="${actualDepartment.deptManager.lastname}"></td>
+            <td th:text="${actualDepartment.deptManager.getLastAndFirstName()}"></td>
             <td th:text="${actualDepartment.deptManager.dateOfBirth}"></td>
             <td th:text="${actualDepartment.deptManager.gender}"></td>
             <td th:text="${actualDepartment.deptManager.employeeNo}"></td>
             <td></td>
         </tr>
         <tr th:each="student: ${actualDepartment.employees}">
-            <td th:text="${student.lastname}"></td>
+            <td th:text="${student.getLastAndFirstName()}"></td>
             <td th:text="${student.dateOfBirth}"></td>
             <td th:text="${student.gender}"></td>
             <td th:text="${student.employeeNo}"></td>

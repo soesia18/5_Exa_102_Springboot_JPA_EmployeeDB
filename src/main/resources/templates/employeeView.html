@@ -15,7 +15,7 @@
 <body>
 <div class="contentEmployee">
     <h1>Employee Administration</h1>
-    <form th:action="@{/employee/new}" th:object="${newEmployee}">
+    <form th:action="@{/employee/new}" method="post" th:object="${newEmployee}">
         <div style="margin: 10%" class="d-flex justify-content-around">
             <label>Number: <input th:field="${newEmployee.employeeNo}" type="number"></label>
             <label>Firstname: <input th:field="${newEmployee.firstname}" type="text"></label>

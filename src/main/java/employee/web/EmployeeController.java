@@ -4,10 +4,12 @@ import employee.database.DepartmentRepository;
 import employee.database.EmployeeRepository;
 import employee.pojos.Department;
 import employee.pojos.Employee;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,7 +38,6 @@ public class EmployeeController {
 
     @GetMapping
     public ModelAndView loadAddEmployeePage() {
-
         log.debug("GET request to /employee");
         return new ModelAndView("employeeView");
     }
@@ -61,10 +62,16 @@ public class EmployeeController {
         return new Employee();
     }
 
-    @GetMapping("/new")
-    public ModelAndView newEmployee (Model model,
-                                     @ModelAttribute("newEmployee") Employee employee,
-                                     @SessionAttribute("actualDepartment") Department department) {
+    @PostMapping("/new")
+    public ModelAndView newEmployee (@Valid @ModelAttribute("newEmployee") Employee employee,
+                                     @SessionAttribute("actualDepartment") Department department,
+                                     Errors errors) {
+        log.debug("POST request to /employee/new");
+
+        if (errors.hasErrors()) {
+            log.debug("Errors:" + errors);
+            return new ModelAndView("employeeView");
+        }
 
         employee.setDepartment(department);
         employeeRepository.save(employee);

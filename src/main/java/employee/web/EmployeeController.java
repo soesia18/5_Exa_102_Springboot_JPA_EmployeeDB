@@ -74,7 +74,7 @@ public class EmployeeController {
             return new ModelAndView("employeeView");
         }
 
-        /*employee.setDepartment(department);*/
+        employee.setDepartment(department);
         employeeRepository.save(employee);
         return new ModelAndView("redirect:/department");
     }

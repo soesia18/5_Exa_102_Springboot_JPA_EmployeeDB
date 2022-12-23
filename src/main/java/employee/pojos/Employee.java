@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import employee.util.LocalDateDeserializer;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -27,21 +30,20 @@ import java.time.LocalDate;
 public class Employee {
     @Id
     @JsonAlias("emp_no")
-    /*@NotBlank(message = "employee-number is required")*/
+    @NotNull(message = "employee-number is required")
     private Integer employeeNo;
     @Column(length = 14)
-    /*@NotBlank(message = "firstname is required")*/
+    @NotBlank(message = "firstname is required")
     private String firstname;
     @Column(length = 16)
-    /*@NotBlank(message = "lastname is required")*/
+    @NotBlank(message = "lastname is required")
     private String lastname;
     @Column(length = 5)
-    /*@Size(max = 1, message = "only M or F allowed")
-    @NotBlank(message = "gender is required")*/
+    @NotNull(message = "gender is required")
     private Gender gender;
     @JsonAlias("birthDate")
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    /*@NotBlank(message = "birthdate is required")*/
+    @NotNull(message = "birthdate is required")
     private LocalDate dateOfBirth;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

@@ -45,10 +45,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Birthdate</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Employee-No</th>
+            <th scope="col">Name <a class="btn" th:href="@{/department/sort/1}"><img th:src="@{/up-down.png}"></a></th>
+            <th scope="col">Birthdate <a class="btn" th:href="@{/department/sort/2}"><img th:src="@{/up-down.png}"></a></th>
+            <th scope="col">Gender <a class="btn" th:href="@{/department/sort/3}"><img th:src="@{/up-down.png}"></a></th>
+            <th scope="col">Employee-No <a class="btn" th:href="@{/department/sort/4}"><img th:src="@{/up-down.png}"></a></th>
             <th></th>
         </tr>
         </thead>
@@ -60,7 +60,7 @@
             <td th:text="${actualDepartment.deptManager.employeeNo}"></td>
             <td></td>
         </tr>
-        <tr th:each="student: ${actualDepartment.employees}">
+        <tr th:each="student: ${actualDepartment.employees}" th:if="${student} != ${actualDepartment.deptManager}">
             <td th:text="${student.getLastAndFirstName()}"></td>
             <td th:text="${student.dateOfBirth}"></td>
             <td th:text="${student.gender}"></td>

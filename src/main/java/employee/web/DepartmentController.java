@@ -3,10 +3,12 @@ package employee.web;
 import employee.database.DepartmentRepository;
 import employee.database.EmployeeRepository;
 import employee.pojos.Department;
+import employee.pojos.Employee;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -86,7 +88,37 @@ public class DepartmentController {
         return new ModelAndView("departmentView");
     }
 
-    private Department getDepartment (String deptNo) {
+    @ModelAttribute("sortedField")
+    public String sortedField() {
+        return "";
+    }
+
+    private int oldId;
+
+    @GetMapping("/sort/{id}")
+    public ModelAndView sortEmployees(@PathVariable int id,
+                                      @SessionAttribute("actualDepartment") Department department) {
+        log.debug("GET request to /department/sort/" + id);
+
+        if (oldId != id) {
+            switch (id) {
+                case 1 -> department.getEmployees().sort(Comparator.comparing(Employee::getLastname).thenComparing(Employee::getFirstname));
+                case 2 -> department.getEmployees().sort(Comparator.comparing(Employee::getDateOfBirth));
+                case 3 -> department.getEmployees().sort(Comparator.comparing(Employee::getGender));
+                case 4 -> department.getEmployees().sort(Comparator.comparing(Employee::getEmployeeNo));
+            }
+        } else {
+            Collections.reverse(department.getEmployees());
+        }
+
+
+
+        oldId = id;
+
+        return new ModelAndView("departmentView");
+    }
+
+    private Department getDepartment(String deptNo) {
         Optional<Department> optionalDepartment = departmentRepository.findById(deptNo);
         optionalDepartment.ifPresent(department -> department.setEmployees(department.getEmployees().stream().filter(employee -> !employee.equals(department.getDeptManager())).collect(Collectors.toList())));
 

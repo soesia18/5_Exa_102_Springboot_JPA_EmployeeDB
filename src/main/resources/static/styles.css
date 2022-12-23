@@ -15,3 +15,12 @@ body {
 .deptManager {
     color: red;
 }
+
+.error {
+    color: red;
+}
+
+img {
+    width: 10%;
+    height: 10%;
+}

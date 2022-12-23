@@ -64,8 +64,9 @@ public class EmployeeController {
 
     @PostMapping("/new")
     public ModelAndView newEmployee (@Valid @ModelAttribute("newEmployee") Employee employee,
-                                     @SessionAttribute("actualDepartment") Department department,
-                                     Errors errors) {
+                                     Errors errors,
+                                     @SessionAttribute("actualDepartment") Department department
+                                     ) {
         log.debug("POST request to /employee/new");
 
         if (errors.hasErrors()) {
@@ -73,7 +74,7 @@ public class EmployeeController {
             return new ModelAndView("employeeView");
         }
 
-        employee.setDepartment(department);
+        /*employee.setDepartment(department);*/
         employeeRepository.save(employee);
         return new ModelAndView("redirect:/department");
     }
